@@ -1,0 +1,1 @@
+\\SEVERNAME\Applications\7z1805-x64.exe /S

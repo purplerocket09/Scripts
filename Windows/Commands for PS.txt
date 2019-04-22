@@ -1,0 +1,40 @@
+Dism /online /Get-Packages >Packages.txt
+DISM /online  /Remove-Package /PackageName:
+Dism /Image:mount /Get-Packages | select-string Package Identity >Packages.txt
+DISM /Image:mount  /Remove-Package /PackageName:
+
+ select-string DisplayName, Package Identity
+
+Dism /online /Get-ProvisionedAppxPackages >Provisioned.txt
+Dism /Image:Mount /Get-ProvisionedAppxPackages | select-string PackageName >Provisioned.txt
+DISM /Image:Mount /Remove-ProvisionedAppxPackage /PackageName:
+DISM /online /Remove-ProvisionedAppxPackage /PackageName:
+
+PackageName
+
+Dism /online /Get-Features >Features.txt
+Dism /online /Disable-Feature /FeatureName:
+Dism /Image:mount /Enable-Feature /FeatureName:
+
+DISM /image:Mount /Add-Package /Packagepath:Updates
+Dism /Image:Mount /Add-Driver /Driver:drivers /Recurse
+
+
+Dism /Mount-Image /ImageFile:install.wim /index:1 /MountDir:Mount
+Dism /Commit-Image /MountDir:mount
+DISM /Unmount-Wim /Mountdir:Mount /commit
+DISM /Cleanup-Wim
+
+reg load HKLM\DISM_system mount\windows\system32\config\system
+reg load HKLM\DISM_SOFTWARE mount\windows\system32\config\SOFTWARE
+reg unload 
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+dism /Get-WimInfo /WimFile:install.esd
+dism /export-image /SourceImageFile:install.esd /SourceIndex:6 /DestinationImageFile:install.wim /Compress:max /CheckIntegrity
+
+Dism /Export-Image /SourceImageFile:c:\temp\install.wim /SourceIndex:1 /DestinationImageFile:c:\temp\install.esd /Compress:recovery /CheckIntegrity
+
+
+Get-AppXPackage -AllUsers | Foreach {Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"}

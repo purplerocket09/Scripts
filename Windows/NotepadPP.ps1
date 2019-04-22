@@ -1,0 +1,1 @@
+\\SEVERNAME\Applications\npp.7.6.6.Installer.x64.exe /S

@@ -1,0 +1,2 @@
+Rename-Item "C:\Program Files\Microsoft Office\root\Office16\MSOSYNC.exe" "C:\Program Files\Microsoft Office\root\Office16\MSOSYNC.exe.Backup" -force
+Rename-Item "C:\Program Files\Microsoft Office\root\Office16\MSOUC.exe" "C:\Program Files\Microsoft Office\root\Office16\MSOUC.exe.Backup" -force
